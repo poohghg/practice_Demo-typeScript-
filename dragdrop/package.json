@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "description": "Understanding TypeScript Course Setup",
   "main": "app.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "lite-server"
+  "scripts": {    
+    "start": "parcel index.html --open",
+    "build": "parcel build index.html"
   },
   "keywords": [
     "typescript",
@@ -13,7 +13,8 @@
   ],
   "author": "Maximilian Schwarzmüller",
   "license": "ISC",
-  "devDependencies": {
-    "lite-server": "^2.5.4"
+  "devDependencies": {},
+  "dependencies": {
+    "parcel": "^2.7.0"
   }
 }
