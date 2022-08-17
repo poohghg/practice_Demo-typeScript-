@@ -15,6 +15,19 @@ enum ValidInput {
   "max",
 }
 
+export function AutoBind(traget: any, name: string, desc: PropertyDescriptor) {
+  const originalMethod = desc.value;
+  // console.log("desc", desc);
+  const abjDesc: PropertyDescriptor = {
+    configurable: true,
+    get() {
+      const boundFn = originalMethod.bind(this);
+      return boundFn;
+    },
+  };
+  return abjDesc;
+}
+
 export function validationInput(validObj: Validatable) {
   let isValid = true;
   if (validObj.required) {

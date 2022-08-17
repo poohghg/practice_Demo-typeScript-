@@ -1,18 +1,36 @@
-// import { validationInput } from "./utility/funcion";
+import { validationInput, AutoBind } from "./utility/funcion";
 
-import { validationInput } from "./utility/funcion";
+class ProjectList {
+  hostElement: HTMLDivElement;
+  templateElement: HTMLTemplateElement;
+  element: HTMLElement;
 
-function AutoBind(traget: any, name: string, desc: PropertyDescriptor) {
-  const originalMethod = desc.value;
-  // console.log("desc", desc);
-  const abjDesc: PropertyDescriptor = {
-    configurable: true,
-    get() {
-      const boundFn = originalMethod.bind(this);
-      return boundFn;
-    },
-  };
-  return abjDesc;
+  constructor(private type: "active" | "finished") {
+    this.hostElement = document.getElementById("app")! as HTMLDivElement;
+    this.templateElement = document.getElementById(
+      "project-list",
+    )! as HTMLTemplateElement;
+    const importedNode = document.importNode(
+      this.templateElement.content,
+      true,
+    );
+    this.element = importedNode.firstElementChild! as HTMLElement;
+    this.element.id = `${this.type}-projects`;
+
+    this.attach();
+    this.renderContent();
+  }
+
+  private renderContent() {
+    const listId = `${this.type}-projects-list`;
+    this.element.querySelector("ul")!.id = listId;
+    this.element.querySelector("h2")!.textContent =
+      this.type.toUpperCase() + "PROJECT";
+  }
+
+  private attach() {
+    this.hostElement.insertAdjacentElement("beforeend", this.element);
+  }
 }
 
 // Code goes here!
@@ -110,3 +128,5 @@ class ProjectInput {
 }
 
 const prjInput = new ProjectInput();
+const prjList1 = new ProjectList("active");
+const prjList2 = new ProjectList("finished");
