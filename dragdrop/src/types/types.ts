@@ -3,7 +3,7 @@ export enum ProjectStatus {
   finished,
 }
 
-export type Listener = (item: Project[]) => void;
+export type Listener<T> = (item: T[]) => void;
 
 export interface InputValues {
   title: string;
