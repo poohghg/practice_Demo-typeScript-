@@ -1,7 +1,9 @@
-import { validationInput, AutoBind } from "./utility/funcion";
+import { Component } from "./abstractClass/component";
 import { ProjectStatus, Listener, InputValues, Project } from "./types/types";
 
-class State<T> {
+import { validationInput, AutoBind } from "./utility/funcion";
+
+abstract class State<T> {
   protected listeners: Listener<T>[] = [];
   addListener(listeneFn: Listener<T>) {
     this.listeners.push(listeneFn);
@@ -38,63 +40,40 @@ class ProjectState extends State<Project> {
 }
 const prjState = ProjectState.getInstance();
 
-// 추상클래스로 인스턴스화를 막는다.
-abstract class Component<T extends HTMLElement, U extends HTMLElement> {
-  hostElement: T;
-  templateElement: HTMLTemplateElement;
-  element: U;
-
-  constructor(
-    hostElementId: string,
-    templateId: string,
-    insertAtStart: boolean,
-    newElementId?: string,
-  ) {
-    this.hostElement = document.getElementById(hostElementId)! as T;
-    this.templateElement = document.getElementById(
-      templateId,
-    )! as HTMLTemplateElement;
-    const importedNode = document.importNode(
-      this.templateElement.content,
-      true,
-    );
-    this.element = importedNode.firstElementChild as U;
-    if (newElementId) this.element.id = newElementId;
-    this.attach(insertAtStart);
+class ProjectItem extends Component<HTMLUListElement, HTMLElement> {
+  private project: Project;
+  constructor(hostId: string, project: Project) {
+    super(hostId, "single-project", false, project.id);
+    this.project = project;
+    this.renderContent();
   }
-  private attach(insertBeginning: boolean) {
-    this.hostElement.insertAdjacentElement(
-      insertBeginning ? "afterbegin" : "beforeend",
-      this.element,
-    );
+  configure(): void {}
+  renderContent(): void {
+    this.element.querySelector("h2")!.textContent = this.project.title;
+    this.element.querySelector("h3")!.textContent =
+      this.project.peopel.toString() + "명";
+    this.element.querySelector("p")!.textContent = this.project.desc;
   }
-
-  abstract configure(): void;
-  abstract renderContent(): void;
 }
 
 class ProjectList extends Component<HTMLDivElement, HTMLElement> {
   assignedProjects: Project[] = [];
+  private type: "active" | "finished";
 
-  constructor(private type: "active" | "finished") {
+  constructor(type: "active" | "finished") {
     super("app", "project-list", false, `${type}-projects`);
+    this.type = type;
     this.configure();
     this.renderContent();
   }
 
   private renderProjects() {
-    const listEL = document.getElementById(
+    const listEl = document.getElementById(
       `${this.type}-projects-list`,
     )! as HTMLUListElement;
-    const listItme = document.createElement("li");
-    listItme!.id = `${this.type}-projects-list`;
-    this.assignedProjects.forEach(({ id, title }) => {
-      if (!document.getElementById(`${this.type}-projects-list-${id}`)) {
-        const listItme = document.createElement("li");
-        listItme!.id = `${this.type}-projects-list-${id}`;
-        listItme.textContent = title;
-        listEL.append(listItme);
-      }
+    listEl.innerHTML = "";
+    this.assignedProjects.forEach((prj) => {
+      new ProjectItem(this.element.querySelector("ul")!.id, prj);
     });
   }
 
