@@ -26,3 +26,14 @@ export class Project {
     this.status = status;
   }
 }
+
+export interface Draggable {
+  dragStartHandler(event: DragEvent): void;
+  dragEndHandler(event: DragEvent): void;
+}
+
+export interface DragTarget {
+  dragOverHandler(event: DragEvent): void;
+  drapHandler(event: DragEvent): void;
+  dragLeaveHandler(event: DragEvent): void;
+}

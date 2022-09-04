@@ -92,8 +92,11 @@ button:active {
   box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.26);
   padding: 1rem;
   margin: 1rem;
+  background-color: #fff;
 }
-
+/* .projects li ::selection {
+  background-color: black !important;
+} */
 .projects li h2 {
   color: #ff0062;
   margin: 0.5rem 0;
@@ -128,4 +131,9 @@ button:active {
 }
 .form-control {
   width: 100%;
+}
+
+.moveDragBox {
+  opacity: 0.4 !important;
+  /* background1-color: red !important; */
 }
