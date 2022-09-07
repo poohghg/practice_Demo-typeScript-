@@ -1,5 +1,9 @@
 // 추상클래스로 인스턴스화를 막는다.
-export abstract class Component<T extends HTMLElement, U extends HTMLElement> {
+// default - 메인
+export default abstract class Component<
+  T extends HTMLElement,
+  U extends HTMLElement,
+> {
   hostElement: T;
   templateElement: HTMLTemplateElement;
   element: U;

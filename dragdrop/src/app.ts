@@ -1,4 +1,4 @@
-import { Component } from "./abstractClass/component";
+import Component from "./abstractClass/component";
 import {
   ProjectStatus,
   Listener,
@@ -113,19 +113,21 @@ class ProjectList
   }
 
   @AutoBind
-  drapHandler(e: DragEvent) {
+  dragLeaveHandler(_: DragEvent) {
+    const listEl = this.element.querySelector("ul")!;
+    listEl.classList.toggle("droppable");
+  }
+
+  @AutoBind
+  dropHandler(e: DragEvent) {
     const prjId = e.dataTransfer!.getData("text/plain");
-    console.log("prjId", prjId);
+    // console.log("prjId", prjId);
     prjState.moveProject(
       prjId,
       this.type === "active" ? ProjectStatus.active : ProjectStatus.finished,
     );
   }
-  @AutoBind
-  dragLeaveHandler(_: DragEvent) {
-    const listEl = this.element.querySelector("ul")!;
-    listEl.classList.toggle("droppable");
-  }
+
   private renderProjects() {
     const listEl = document.getElementById(
       `${this.type}-projects-list`,
@@ -147,7 +149,7 @@ class ProjectList
   configure() {
     this.element.addEventListener("dragover", this.dragOverHandler);
     this.element.addEventListener("dragleave", this.dragLeaveHandler);
-    this.element.addEventListener("drop", this.drapHandler);
+    this.element.addEventListener("drop", this.dropHandler);
     prjState.addListener((projects: Project[]) => {
       this.assignedProjects = projects.filter(
         ({ status }) => ProjectStatus[status] === this.type,
