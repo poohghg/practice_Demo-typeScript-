@@ -8,6 +8,7 @@ module.exports = {
     static: {
       directory: path.join(__dirname, "/"),
     },
+    historyApiFallback: true,
     compress: true,
   },
   output: {

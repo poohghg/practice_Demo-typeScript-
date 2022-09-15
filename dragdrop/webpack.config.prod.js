@@ -11,7 +11,7 @@ module.exports = {
     // publicPath: "dist",
   },
   // ts-map파일의 디버깅용
-  devtool: "none",
+  devtool: "eval",
   module: {
     rules: [
       // ts로더
