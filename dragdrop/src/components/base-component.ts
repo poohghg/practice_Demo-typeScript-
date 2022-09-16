@@ -22,6 +22,7 @@ export default abstract class Component<
       this.templateElement.content,
       true,
     );
+    //
     this.element = importedNode.firstElementChild as U;
     if (newElementId) this.element.id = newElementId;
     this.attach(insertAtStart);
