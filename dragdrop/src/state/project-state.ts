@@ -7,6 +7,7 @@ import {
 
 abstract class State<T> {
   protected listeners: Listener<T>[] = [];
+
   addListener(listeneFn: Listener<T>) {
     this.listeners.push(listeneFn);
   }
