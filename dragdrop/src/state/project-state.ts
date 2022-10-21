@@ -49,4 +49,5 @@ class ProjectState extends State<Project> {
     }
   }
 }
+
 export const prjState = ProjectState.getInstance();

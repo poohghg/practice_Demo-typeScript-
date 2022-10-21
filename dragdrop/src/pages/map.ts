@@ -13,6 +13,7 @@ const BASE_URL = `https://maps.googleapis.com/maps/api/geocode/json?place_id=ChI
 class GMap {
   $hostElement: HTMLDivElement;
   $target: HTMLDivElement;
+
   constructor(hostId: string = "app") {
     this.$hostElement = document.getElementById(hostId)! as HTMLDivElement;
     this.$target = document.createElement("div");
@@ -20,6 +21,7 @@ class GMap {
     this.render();
     this.configure();
   }
+
   configure() {
     const form = document.getElementById("map_form")!;
     const adressInput = document.getElementById("address")! as HTMLInputElement;
