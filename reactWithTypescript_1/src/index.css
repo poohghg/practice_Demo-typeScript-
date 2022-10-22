@@ -8,6 +8,18 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+.App {
+  text-align: center;
+  /* margin-top: 10vh; */
+}
+
+#todo_form {
+  margin: 3rem auto;
+  display: flex;
+  justify-content: center;
+  /* background-color: red; */
+}
+
 /* code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;

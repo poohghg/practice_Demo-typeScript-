@@ -2,7 +2,7 @@ import React from "react";
 
 const NewTodo: React.FC = () => {
   return (
-    <form>
+    <form id="todo_form">
       <div>
         <label htmlFor="todo-text"></label>
         <input type="text" id="todo-text" />
