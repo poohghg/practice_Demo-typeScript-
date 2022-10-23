@@ -1,15 +1,20 @@
-import React from "react";
-import { text } from "stream/consumers";
+import React, { Dispatch, SetStateAction } from "react";
 
 interface TodoListProps {
   items: { id: Number; text: String }[];
+  removeTods(pid: Number): void;
+  // setTodos: Dispatch<SetStateAction<Todos[]>>;
 }
-// [].map(())
-const TodoList: React.FC<TodoListProps> = ({ items }) => {
+
+const TodoList: React.FC<TodoListProps> = ({ items, removeTods }) => {
   return (
     <div>
       {items.map(({ id, text }) => (
-        <li key={id.toString()}>{text}</li>
+        <li id="todo-item" key={id.toString()}>
+          <span>{id.toString()}</span>
+          <span> {text}</span>
+          <button onClick={() => removeTods(id)}>삭제</button>
+        </li>
       ))}
     </div>
   );
