@@ -6,8 +6,9 @@ import React, {
   memo,
 } from "react";
 import { Todos } from "../models/todo.model";
-import { validationInput, ValidInput } from "../modules/functions";
+import { validationInput } from "../modules/functions";
 interface NewTodoProps {
+  // setTodos: () => void;s
   setTodos: Dispatch<SetStateAction<Todos[]>>;
 }
 

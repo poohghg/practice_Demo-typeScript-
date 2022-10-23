@@ -1,21 +1,22 @@
-import React, { Dispatch, SetStateAction } from "react";
+import React, { FC } from "react";
 
 interface TodoListProps {
   items: { id: Number; text: String }[];
-  removeTods(pid: Number): void;
-  // setTodos: Dispatch<SetStateAction<Todos[]>>;
+  removeTods: (pid: Number) => void;
 }
 
-const TodoList: React.FC<TodoListProps> = ({ items, removeTods }) => {
+const TodoList: FC<TodoListProps> = ({ items, removeTods }) => {
   return (
     <div>
       {items.map(({ id, text }) => (
-        <li id="todo-item" key={id.toString()}>
+        <li key={id.toString()} id="todo-item">
           <span>{id.toString()}</span>
           <span> {text}</span>
+          {/* <button onClick={removeTods.bind(null, id)}>삭제</button> */}
           <button onClick={() => removeTods(id)}>삭제</button>
         </li>
       ))}
+      1
     </div>
   );
 };
