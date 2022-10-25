@@ -23,7 +23,9 @@ function App() {
           전체 삭제
         </button>
       </div>
-      <TodoList items={todos} removeTods={removeTods} />
+      <TodoList items={todos} removeTods={removeTods}>
+        <h4>Todo List</h4>
+      </TodoList>
     </div>
   );
 }

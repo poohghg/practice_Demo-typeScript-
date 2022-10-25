@@ -8,11 +8,10 @@ import React, {
 import { Todos } from "../models/todo.model";
 import { validationInput } from "../modules/functions";
 interface NewTodoProps {
-  // setTodos: () => void;s
   setTodos: Dispatch<SetStateAction<Todos[]>>;
 }
 
-const NewTodo: React.FC<NewTodoProps> = ({ setTodos }) => {
+const NewTodo = ({ setTodos }: NewTodoProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const todoSubmitHandler = useCallback((e: React.FormEvent) => {
@@ -21,6 +20,7 @@ const NewTodo: React.FC<NewTodoProps> = ({ setTodos }) => {
     const isValid = validationInput({ value: text, required: true });
     // console.log();
     if (isValid) {
+      // 함수로 넘기기
       setTodos((prev) => {
         const id = prev[prev.length - 1]?.id + 1 || 0;
         return [...prev, { id, text }];
@@ -38,7 +38,9 @@ const NewTodo: React.FC<NewTodoProps> = ({ setTodos }) => {
         <label htmlFor="todo-text"></label>
         <input ref={inputRef} type="text" id="todo-text" />
       </div>
-      <button type="submit"> ADD TODO</button>
+      <button id="todo_form_Btn" type="submit">
+        ADD TODO
+      </button>
     </form>
   );
 };
