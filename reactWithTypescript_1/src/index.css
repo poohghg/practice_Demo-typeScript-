@@ -46,7 +46,6 @@ li {
   padding: 1rem 0;
   display: flex;
   justify-content: center;
-  /* background-color: red; */
 }
 
 #todo_form > div {
@@ -62,7 +61,7 @@ li {
 }
 #todo_form_Btn {
   margin-left: 1rem;
-  padding: 0.4rem 0.3rem;
+  padding: 0.4rem 0.5rem;
   border-color: #eee;
   border-radius: 12px;
   font-size: 0.9rem;
