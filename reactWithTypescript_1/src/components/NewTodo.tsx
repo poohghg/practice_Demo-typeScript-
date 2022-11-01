@@ -12,7 +12,7 @@ interface NewTodoProps {
 }
 
 const NewTodo = ({ setTodos }: NewTodoProps) => {
-  const inputRef = useRef<HTMLInputElement>(null);
+  const inputRef = useRef<HTMLInputElement | null>(null);
 
   const todoSubmitHandler = useCallback((e: React.FormEvent) => {
     e.preventDefault();

@@ -1,13 +1,18 @@
 import React from "react";
 import BaseForm from "./BaseForm";
 
-const SearchTodo = () => {
-  const submitHandler = () => {};
+interface SearchTodoProps {
+  searchTodoHandler: (value: { text: string }) => void;
+}
 
+const SearchTodo = ({ searchTodoHandler }: SearchTodoProps) => {
   return (
     <BaseForm
-      submitHandler={() => {}}
-      refArr={[{ id: "search_text", type: "text", label: "텍스트 검색" }]}
+      actionFunction={searchTodoHandler}
+      refArr={[
+        { id: "search_text", type: "text", label: "Todo 검색", name: "text" },
+        // { id: "search_text_1", type: "text", label: "Todo 검색" },
+      ]}
     />
   );
 };
