@@ -1,10 +1,12 @@
 import RouterApp from "./RouterApp";
+import { ThemeProvider } from "styled-components";
+import { Theme, dark, light } from "./style/them";
 
 function App() {
   return (
-    <div className="App">
+    <ThemeProvider theme={Theme}>
       <RouterApp />
-    </div>
+    </ThemeProvider>
   );
 }
 
