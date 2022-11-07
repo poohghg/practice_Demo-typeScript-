@@ -2,10 +2,6 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Main from "./pages/Main";
 import Todo from "./pages/Todo";
 
-// const paths = [
-//   {path:}
-// ];
-
 const RouterApp = () => {
   return (
     <BrowserRouter>

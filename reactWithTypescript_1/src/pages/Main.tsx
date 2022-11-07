@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 // import { Interface } from "readline";
 import styled from "styled-components";
 
@@ -20,7 +20,6 @@ const PathInfo: PathInterface[] = [
 
 const Main = () => {
   const navigate = useNavigate();
-
   return (
     <Base>
       <HeaderLabel>DemoCode</HeaderLabel>
@@ -54,7 +53,6 @@ const HeaderLabel = styled.h3`
   padding: 2rem 0;
   border-bottom: 1rem;
   color: ${({ theme }) => theme.colors.black};
-  /* border-bottom: ${({ theme }) => `1px solid ${theme.colors.lightGray}`}; */
   box-shadow: 0px 0px 2px 1px #bcbcbc;
 `;
 const List = styled.ul`
@@ -64,7 +62,6 @@ const List = styled.ul`
   flex-wrap: wrap;
   padding: 2rem 5%;
 `;
-
 const ContentWrap = styled.li`
   margin-left: 3%;
   margin-bottom: 1rem;
@@ -72,12 +69,12 @@ const ContentWrap = styled.li`
   max-width: 320px;
   overflow: hidden;
   transition: transform 0.1s ease-in;
-  &:hover {
-    transform: scale(1.1, 1.2);
-  }
   border-radius: 12px;
   box-shadow: 0px 0px 1px 0.5px #bcbcbc;
   cursor: pointer;
+  &:hover {
+    transform: scale(1.1, 1.2);
+  }
 `;
 
 const Content = styled.button`
@@ -100,7 +97,6 @@ const ContentHeader = styled.h5`
   border-bottom: ${({ theme }) => `1px solid ${theme.colors.lightGray}`};
   padding: 0.2rem 0;
 `;
-
 const ContentText = styled.p`
   display: flex;
   justify-content: center;
@@ -113,5 +109,4 @@ const ContentText = styled.p`
   background: ${({ theme }) =>
     `linear-gradient(45deg, ${theme.colors.blue}, ${theme.colors.skyBlue})`};
   color: ${({ theme }) => theme.colors.white};
-  /* color: ${({ theme }) => theme.colors.black}; */
 `;
