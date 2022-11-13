@@ -7,7 +7,7 @@ const RouterApp = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Main />}></Route>
-        <Route path="/todo" element={<Todo />}></Route>
+        {/* <Route path="/todo" element={<Todo />}></Route> */}
       </Routes>
     </BrowserRouter>
   );
