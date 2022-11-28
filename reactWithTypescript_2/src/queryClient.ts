@@ -1,49 +1,38 @@
-import {
-  useQuery,
-  useMutation,
-  useQueryClient,
-  QueryClient,
-  QueryClientProvider,
-} from "react-query";
-import axios, { AxiosRequestConfig, AxiosInstance } from "axios";
+import { QueryClient } from "react-query";
+import Ax from "./modules/axios";
 
 interface FetcherConfig {
   method: "get" | "post" | "put" | "patch" | "delete";
   url: string;
-  data?: { [key: string]: any };
+  data?: { [key: string]: any } | string;
   params?: { [key: string]: any };
 }
 
 export const getClient = (() => {
   let client: null | QueryClient = null;
-  if (!client) return new QueryClient();
+  if (!client)
+    return new QueryClient({
+      defaultOptions: {
+        queries: {
+          // refetchOnMount: false,
+          refetchOnReconnect: false,
+          refetchOnWindowFocus: false,
+        },
+      },
+    });
   return client;
 })();
 
-const baseUrl: string = "https://fakestoreapi.com";
-
-// https://yamoo9.github.io/axios/guide/api.html#%EA%B5%AC%EC%84%B1-%EC%98%B5%EC%85%98
-const getAxios = () => {
-  const axiosConfig: AxiosRequestConfig = {
-    baseURL: baseUrl,
-    // withCredentials: false,
-    // headers: {
-    //   "Access-Control-Allow-Origins": baseUrl,
-    //   "Content-Type": "application/json",
-    // 'Content-Type': 'application/json',
-    // },
-    //
-  };
-  const client: AxiosInstance | null = axios.create(axiosConfig); // client: AxiosInstance
-  if (client) return client;
-  return axios.create(axiosConfig);
-};
-const ax = getAxios();
-
 export const fetcher = async (config: FetcherConfig) => {
-  // console.log(config, "config");
   try {
-    const res = await ax.request(config);
-    return res;
+    if (config.params)
+      config.url += "?" + new URLSearchParams(config.params).toString();
+    if (config.data) config.data = JSON.stringify(config.data);
+    const res = await Ax.getClient.request(config);
+    return res.data;
   } catch (error) {}
+};
+
+export const QueryKeys = {
+  PRODUCTS: "PRODUCTS",
 };

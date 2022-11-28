@@ -4,14 +4,18 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { getClient } from "./queryClient";
 import { useEffect } from "react";
+import { ThemeProvider } from "styled-components";
+import { Theme } from "./style/them";
 
 const App = () => {
   const element = useRoutes(routes);
   return (
-    <QueryClientProvider client={getClient}>
-      {element}
-      <ReactQueryDevtools initialIsOpen={false} />
-    </QueryClientProvider>
+    <ThemeProvider theme={Theme}>
+      <QueryClientProvider client={getClient}>
+        {element}
+        <ReactQueryDevtools initialIsOpen={false} />
+      </QueryClientProvider>
+    </ThemeProvider>
   );
 };
 

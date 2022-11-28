@@ -1,37 +1,38 @@
 // 'https://fakestoreapi.com/products'
-import { fetcher } from "../../queryClient";
-import axios, { AxiosRequestConfig, AxiosInstance } from "axios";
-import { useEffect } from "react";
+import { fetcher, QueryKeys } from "../../queryClient";
+import { useQuery } from "react-query";
+import { ProductsModel } from "../../models/products";
+import ProductItem from "../../components/productItem";
+import styled from "styled-components";
 
 const ProductList = () => {
-  // /products
-  // const res = fetcher({ url: "/products", method: "get" });
-  // console.log(res);
-
-  useEffect(() => {
-    console.log("render");
-    // const getData = async () => {
-    //   try {
-    //     console.log("???????");
-    //     const res = await axios.get("https://fakestoreapi.com/products");
-    //     if (res.status !== 200) new Error("api Error");
-    //     return res.data;
-    //   } catch (error) {}
-    // };
-    // const a = async () => {
-    //   return await getData();
-    // };
-    // console.log(a());
-
-    (async () => {
-      const res = await fetcher({ url: "/products", method: "get" });
-      console.log("Res", res);
-    })();
-    return () => {
-      console.log("return");
-    };
-  }, []);
-
-  return <div>상품목록입니다.</div>;
+  const { data, status } = useQuery<ProductsModel[], Error>(
+    QueryKeys.PRODUCTS,
+    () => fetcher({ url: "/products", method: "get", params: { limit: 5 } }),
+  );
+  console.log("data", data, "status", status);
+  return (
+    <>
+      <div>상품목록입니다.</div>
+      {status === "success" && (
+        <List>
+          {data?.map((product) => (
+            <ProductItem {...product} key={product.id} />
+          ))}
+        </List>
+      )}
+    </>
+  );
 };
 export default ProductList;
+
+const List = styled.ul`
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1vw;
+
+  /* display: flex;
+  flex-wrap: wrap;
+  gap: 0 40px; */
+`;
