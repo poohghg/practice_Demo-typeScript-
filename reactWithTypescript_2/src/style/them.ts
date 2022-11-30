@@ -55,6 +55,22 @@ const device = {
   desktopL: `@media only screen and (max-width: ${size.desktop})`,
 };
 
+const mediaSize = {
+  mobile: "800px",
+  tablet: "900px",
+  laptop: "1200px",
+  desktop: "1199px",
+};
+
+const media = {
+  // max 보다 크다면
+  // min 보다 작다면
+  mobile: `(max-width: ${mediaSize.mobile}px)`,
+  tablet: `(max-width: ${mediaSize.tablet}px)`,
+  laptop: `(max-width: ${mediaSize.laptop}px)`,
+  desktop: `(min-width: ${mediaSize.desktop}px)`,
+};
+
 // 테마와 관련없이 공통으로 사용되는 변수들입니다
 export const Theme = {
   margins,
@@ -66,14 +82,14 @@ export const Theme = {
 
 export const dark = {
   colors: {
-    titleColor: "#121212",
+    fontColor: "#121212",
     bgColor: "#b8b8b8",
   },
 };
 
 export const light = {
   colors: {
-    titleColor: "#b8b8b8",
+    fontColor: "#b8b8b8",
     bgColor: "#121212",
   },
 };

@@ -6,11 +6,13 @@ import { getClient } from "./queryClient";
 import { useEffect } from "react";
 import { ThemeProvider } from "styled-components";
 import { Theme } from "./style/them";
+import GlobalStyle from "./style/globalStyle";
 
 const App = () => {
   const element = useRoutes(routes);
   return (
     <ThemeProvider theme={Theme}>
+      <GlobalStyle />
       <QueryClientProvider client={getClient}>
         {element}
         <ReactQueryDevtools initialIsOpen={false} />

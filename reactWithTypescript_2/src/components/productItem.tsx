@@ -16,29 +16,51 @@ const ProductItem = ({
   return (
     <Item>
       <Link to={`/products/${id}`}>
-        <p>{category}</p>
-        <p>{title}</p>
+        <Category>{category}</Category>
         <ImgWrap>
           <img src={image} />
         </ImgWrap>
-        <span>{price}</span>
-        <span>{rating.rate}</span>
+        <Title>{title}</Title>
+        <Price>${price}</Price>
+        <span>rate: {rating.rate}</span>
+        <span>count: {rating.count}</span>
       </Link>
     </Item>
   );
 };
 
 const Item = styled.li``;
+
+const Category = styled.h4`
+  color: ${({ theme }) => theme.colors.mainColor};
+  font-size: 1.15rem;
+  font-weight: 600;
+  padding-bottom: 0.25rem;
+`;
+const Title = styled.p`
+  padding-top: 0.3rem;
+  color: ${({ theme }) => theme.colors.mainColor};
+  font-weight: 400;
+  min-height: 30px;
+`;
 const ImgWrap = styled.div`
   height: 20vh;
   border-radius: 16px;
-  border: 1px solid rgba(0, 0, 0, 0.03);
+  border: 2.5px solid rgba(0, 0, 0, 0.03);
   overflow: hidden;
+  /* background-color: #fff; */
   && img {
+    padding: 1rem 0;
     width: 100%;
     height: 100%;
     object-fit: contain;
   }
+`;
+const Price = styled.h4`
+  padding-top: 0.5rem;
+  font-size: 1.1rem;
+  font-weight: 500;
+  padding-bottom: 0.15rem;
 `;
 
 export default ProductItem;

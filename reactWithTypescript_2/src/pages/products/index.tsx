@@ -13,7 +13,7 @@ const ProductList = () => {
   console.log("data", data, "status", status);
   return (
     <>
-      <div>상품목록입니다.</div>
+      <Title>상품목록입니다.</Title>
       {status === "success" && (
         <List>
           {data?.map((product) => (
@@ -26,13 +26,29 @@ const ProductList = () => {
 };
 export default ProductList;
 
+const Title = styled.h2`
+  padding: 0 2rem;
+`;
+
 const List = styled.ul`
+  padding: 1rem 2rem;
   list-style: none;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 1vw;
+  gap: 5.5vh 1vw;
 
-  /* display: flex;
-  flex-wrap: wrap;
-  gap: 0 40px; */
+  /* @media (max-width: 575px) {
+    background-color: red;
+    grid-template-columns: repeat(2, 1fr);
+  } */
+  @media (${({ theme }) => theme.media.mobile}) {
+    background-color: red;
+    grid-template-columns: repeat(2, 1fr);
+  }
+  /* @media ${(props) => props.theme.mobile} {
+    grid-template-columns: repeat(2, 1fr);
+  } */
+  /* @media ${(props) => props.theme.desktop} {
+    grid-template-columns: repeat(3, 1fr);
+  } */
 `;
