@@ -8,7 +8,7 @@ import styled from "styled-components";
 const ProductList = () => {
   const { data, status } = useQuery<ProductsModel[], Error>(
     QueryKeys.PRODUCTS,
-    () => fetcher({ url: "/products", method: "get", params: { limit: 5 } }),
+    () => fetcher({ url: "/products", method: "get", params: { limit: 20 } }),
   );
   console.log("data", data, "status", status);
   return (
@@ -35,20 +35,9 @@ const List = styled.ul`
   list-style: none;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 5.5vh 1vw;
+  gap: 5vh 1vw;
 
-  /* @media (max-width: 575px) {
-    background-color: red;
-    grid-template-columns: repeat(2, 1fr);
-  } */
-  @media (${({ theme }) => theme.media.mobile}) {
-    background-color: red;
+  @media ${(props) => props.theme.media.mobile} {
     grid-template-columns: repeat(2, 1fr);
   }
-  /* @media ${(props) => props.theme.mobile} {
-    grid-template-columns: repeat(2, 1fr);
-  } */
-  /* @media ${(props) => props.theme.desktop} {
-    grid-template-columns: repeat(3, 1fr);
-  } */
 `;

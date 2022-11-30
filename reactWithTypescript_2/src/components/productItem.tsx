@@ -30,18 +30,17 @@ const ProductItem = ({
 };
 
 const Item = styled.li``;
-
 const Category = styled.h4`
   color: ${({ theme }) => theme.colors.mainColor};
   font-size: 1.15rem;
-  font-weight: 600;
+  font-weight: 500;
   padding-bottom: 0.25rem;
 `;
 const Title = styled.p`
   padding-top: 0.3rem;
   color: ${({ theme }) => theme.colors.mainColor};
-  font-weight: 400;
-  min-height: 30px;
+  font-weight: 300;
+  min-height: 3rem;
 `;
 const ImgWrap = styled.div`
   height: 20vh;
@@ -57,10 +56,10 @@ const ImgWrap = styled.div`
   }
 `;
 const Price = styled.h4`
-  padding-top: 0.5rem;
+  padding-top: 0.2rem;
+  padding-bottom: 0.15rem;
   font-size: 1.1rem;
   font-weight: 500;
-  padding-bottom: 0.15rem;
 `;
 
 export default ProductItem;

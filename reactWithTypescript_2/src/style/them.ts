@@ -58,17 +58,17 @@ const device = {
 const mediaSize = {
   mobile: "800px",
   tablet: "900px",
-  laptop: "1200px",
-  desktop: "1199px",
+  // laptop: "1199px",
+  desktop: "1200px",
 };
 
 const media = {
-  // max 보다 크다면
-  // min 보다 작다면
-  mobile: `(max-width: ${mediaSize.mobile}px)`,
-  tablet: `(max-width: ${mediaSize.tablet}px)`,
-  laptop: `(max-width: ${mediaSize.laptop}px)`,
-  desktop: `(min-width: ${mediaSize.desktop}px)`,
+  // max 보다 작다면
+  // min 보다 크다면
+  mobile: `(max-width: ${mediaSize.mobile})`,
+  tablet: `(max-width: ${mediaSize.tablet})`,
+  // laptop: `(max-width: ${mediaSize.laptop}px)`,
+  desktop: `(min-width: ${mediaSize.desktop})`,
 };
 
 // 테마와 관련없이 공통으로 사용되는 변수들입니다
@@ -78,6 +78,7 @@ export const Theme = {
   fonts,
   device,
   colors,
+  media,
 };
 
 export const dark = {

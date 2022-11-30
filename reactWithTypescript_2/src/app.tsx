@@ -1,12 +1,15 @@
 import { useRoutes } from "react-router-dom";
 import { routes } from "./routes"; // or use Vite's alias to simplify import path for nested components
-import { QueryClient, QueryClientProvider } from "react-query";
+import { QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { getClient } from "./queryClient";
-import { useEffect } from "react";
 import { ThemeProvider } from "styled-components";
 import { Theme } from "./style/them";
+
+import "./style/fonts.css";
 import GlobalStyle from "./style/globalStyle";
+import Gnb from "./components/gnb";
+import { useMemo } from "react";
 
 const App = () => {
   const element = useRoutes(routes);
@@ -14,6 +17,7 @@ const App = () => {
     <ThemeProvider theme={Theme}>
       <GlobalStyle />
       <QueryClientProvider client={getClient}>
+        <Gnb />
         {element}
         <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
