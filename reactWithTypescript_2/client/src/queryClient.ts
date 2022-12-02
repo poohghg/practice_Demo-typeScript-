@@ -1,3 +1,4 @@
+import { RequestDocument, request } from "graphql-request";
 import { QueryClient } from "react-query";
 import Ax from "./modules/axios";
 
@@ -25,6 +26,15 @@ export const getClient = (() => {
     });
   return client;
 })();
+
+const BASE_URL = import.meta.env.VITE_SERVER_URL as string;
+console.log(import.meta.env.VITE_KEY);
+
+export const graphqlFetcher = (query: RequestDocument, variables = {}) =>
+  request(`${BASE_URL}/graphql`, query, variables, {
+    "Content-Type": "application/json",
+    "Access-Control-Allow-Origin": BASE_URL,
+  });
 
 export const fetcher = async (config: FetcherConfig) => {
   try {
