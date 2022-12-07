@@ -9,10 +9,25 @@ const productSchema = gql`
     description: String
     createdAt: Float
   }
-
   extend type Query {
-    products: [Product!]
+    products(cursor: ID, showDeleted: Boolean): [Product!]
     product(id: ID!): Product!
+  }
+  extend type Mutation {
+    addProduct(
+      imageUrl: String!
+      price: Int!
+      title: String!
+      description: String!
+    ): Product!
+    updateProduct(
+      id: ID!
+      imageUrl: String
+      price: Int
+      title: String
+      description: String
+    ): Product!
+    deleteProduct(id: ID!): ID!
   }
 `;
 

@@ -9,7 +9,7 @@ import resolvers from "./resolvers";
 
   const server = new ApolloServer({
     typeDefs: schema,
-    resolvers,
+    resolvers: resolvers,
   });
 
   const app = express();
