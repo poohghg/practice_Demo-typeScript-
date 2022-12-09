@@ -50,7 +50,49 @@ const productResolver: Resolver = {
       };
     },
   },
-  Mutation: {},
+  Mutation: {
+    addProduct: async (
+      parent,
+      { imageUrl, price, title, description, category },
+    ) => {
+      const newProduct = {
+        imageUrl,
+        price,
+        title,
+        description,
+        category,
+        rate: 0,
+        hit: 0,
+        createdAt: serverTimestamp(),
+      };
+      const result = await addDoc(collection(db, "products"), newProduct);
+      const snapshot = await getDoc(result);
+      return {
+        ...snapshot.data(),
+        id: snapshot.id,
+      };
+    },
+    updateProduct: async (parent, { id, ...data }) => {
+      const productRef = doc(db, "products", id);
+      if (!productRef) throw new Error("상품이 없습니다.");
+      await updateDoc(productRef, {
+        ...data,
+        createdAt: serverTimestamp(),
+      });
+      const snap = await getDoc(productRef);
+      return {
+        ...snap.data(),
+        id: snap.id,
+      };
+    },
+    deleteProduct: async (parent, { id }) => {
+      // 실제 db에서 delete를 하는 대신, createdAt을 지워준다.
+      const productRef = doc(db, "products", id);
+      if (!productRef) throw new Error("상품이 없습니다.");
+      await updateDoc(productRef, { createdAt: null });
+      return id;
+    },
+  },
 };
 
 export default productResolver;

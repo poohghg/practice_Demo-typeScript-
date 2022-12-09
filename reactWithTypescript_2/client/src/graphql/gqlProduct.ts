@@ -1,13 +1,16 @@
 import { gql } from "graphql-tag";
 
-export type Product = {
+export interface Product {
   id: string;
   imageUrl: string;
   price: number;
   title: string;
   description: string;
   createdAt: number;
-};
+  category?: string;
+  rate?: number;
+  hit?: number;
+}
 
 export type MutableProduct = Omit<Product, "id" | "createdAt">; // 지정한 타입을 뺀 나머지 타입.
 
@@ -24,6 +27,9 @@ const GET_PRODUCTS = gql`
       title
       description
       createdAt
+      category
+      rate
+      hit
     }
   }
 `;
@@ -37,6 +43,9 @@ export const GET_PRODUCT = gql`
       title
       description
       createdAt
+      category
+      rate
+      hit
     }
   }
 `;
@@ -47,12 +56,14 @@ export const ADD_PRODUCT = gql`
     $price: Int!
     $title: String!
     $description: String!
+    $category: String!
   ) {
     addProduct(
       imageUrl: $imageUrl
       price: $price
       title: $title
       description: $description
+      category: $category
     ) {
       id
       imageUrl
@@ -60,6 +71,9 @@ export const ADD_PRODUCT = gql`
       title
       description
       createdAt
+      category
+      rate
+      hit
     }
   }
 `;

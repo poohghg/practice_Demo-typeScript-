@@ -1,17 +1,14 @@
 import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
-import { ProductsModel } from "../../models/products";
-import { fetcher, QueryKeys } from "../../queryClient";
+import { GET_PRODUCT, Product } from "../../graphql/gqlProduct";
+import { restFetcher, QueryKeys, graphqlFetcher } from "../../queryClient";
 
 const ProductsDetail = () => {
   const { id } = useParams();
-  const { data } = useQuery<ProductsModel>([QueryKeys.PRODUCTS, id], () =>
-    fetcher({
-      method: "get",
-      url: `/products/${id}`,
-    }),
+  const { data } = useQuery<Product>([QueryKeys.PRODUCTS, id], () =>
+    graphqlFetcher(GET_PRODUCT, { id }),
   );
-  console.log(data);
+  // console.log(data);
   return <div>상세 {id} 페이지입니다.</div>;
 };
 

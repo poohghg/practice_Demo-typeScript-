@@ -1,29 +1,31 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { ProductsModel } from "../models/products";
+import { Product } from "../graphql/gqlProduct";
 
-interface ProductItemProps extends ProductsModel {}
+interface ProductItemProps extends Product {}
 
 const ProductItem = ({
-  title,
-  category,
-  description,
   id,
-  image,
+  imageUrl,
   price,
-  rating,
+  title,
+  description,
+  createdAt,
+  category = "category",
+  rate = 1,
+  hit = 1,
 }: ProductItemProps) => {
   return (
     <Item>
       <Link to={`/products/${id}`}>
         <Category>{category}</Category>
         <ImgWrap>
-          <img src={image} />
+          <img src={imageUrl} />
         </ImgWrap>
         <Title>{title}</Title>
         <Price>${price}</Price>
-        <span>rate: {rating.rate}</span>
-        <span>count: {rating.count}</span>
+        <span>rate: {rate}</span>
+        <span>count: {hit}</span>
       </Link>
     </Item>
   );

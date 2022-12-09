@@ -1,22 +1,21 @@
 // 'https://fakestoreapi.com/products'
-import { fetcher, QueryKeys } from "../../queryClient";
+import { QueryKeys, graphqlFetcher } from "../../queryClient";
 import { useQuery } from "react-query";
-import { ProductsModel } from "../../models/products";
-import ProductItem from "../../components/productItem";
 import styled from "styled-components";
+import ProductItem from "../../components/productItem";
+import GET_PRODUCTS, { ADD_PRODUCT, Products } from "../../graphql/gqlProduct";
 
 const ProductList = () => {
-  const { data, status } = useQuery<ProductsModel[], Error>(
-    QueryKeys.PRODUCTS,
-    () => fetcher({ url: "/products", method: "get", params: { limit: 20 } }),
+  const { data, status } = useQuery<Products>(QueryKeys.PRODUCTS, () =>
+    graphqlFetcher(GET_PRODUCTS),
   );
-  console.log("data", data, "status", status);
+  console.log("Data", data);
   return (
     <>
       <Title>상품목록입니다.</Title>
       {status === "success" && (
         <List>
-          {data?.map((product) => (
+          {data?.products.map((product) => (
             <ProductItem {...product} key={product.id} />
           ))}
         </List>

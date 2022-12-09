@@ -27,19 +27,19 @@ export const getClient = (() => {
   return client;
 })();
 
-const BASE_URL = import.meta.env.VITE_SERVER_URL as string;
-console.log(import.meta.env.VITE_KEY);
-
-export const graphqlFetcher = (query: RequestDocument, variables = {}) =>
-  request(`${BASE_URL}/graphql`, query, variables, {
+// const BASE_URL = import.meta.env.VITE_SERVER_URL;
+// console.log("BASE_URL", BASE_URL);
+const BASE_URL = "http://localhost:8000";
+export const graphqlFetcher = (query: RequestDocument, variables = {}) => {
+  console.log("query", query);
+  return request(`${BASE_URL}/graphql`, query, variables, {
     "Content-Type": "application/json",
     "Access-Control-Allow-Origin": BASE_URL,
   });
+};
 
-export const fetcher = async (config: FetcherConfig) => {
+export const restFetcher = async (config: FetcherConfig) => {
   try {
-    // if (config.params)
-    //   config.url += "?" + new URLSearchParams(config.params).toString();
     if (config.data) config.data = JSON.stringify(config.data);
     const res = await Ax.getClient.request(config);
     return res.data;
