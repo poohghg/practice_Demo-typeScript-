@@ -8,16 +8,10 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
   }
 
-   body {
-     margin: 0;
-     font-family: 'Noto Sans KR';
-   }
-
-  a,a:hover { 
-    text-decoration:none; 
-    color: #1B1D2A;
-  }
-
+  body {margin: 0;font-family: 'Noto Sans KR';}
+  /* #root{overflow:hidden} */
+  a {color: #fff; text-decoration: none; outline: none}
+  a:hover, a:active {text-decoration: none; color:#fff; }
   ul {
     list-style:none ;
   }
@@ -38,14 +32,14 @@ const GlobalStyle = createGlobalStyle`
 
   h1{}
   h2{font-size:2.2rem;font-weight:700}
-
+  h4{color:#000}
 
  /* 반응형 */
-   @media only screen and (max-width: 844px) {
+   /* @media only screen and (max-width: 844px) {
      html {
        font-size: 13px;
      }
-   }
+   } */
 `;
 
 export default GlobalStyle;

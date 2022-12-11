@@ -15,7 +15,7 @@ const App = () => {
   return (
     <ThemeProvider theme={Theme}>
       <GlobalStyle />
-      <QueryClientProvider client={getClient}>
+      <QueryClientProvider client={getClient()}>
         {element}
         <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>

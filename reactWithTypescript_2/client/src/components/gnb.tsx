@@ -1,5 +1,5 @@
 import { memo } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import styled from "styled-components";
 
 interface Path {
@@ -7,21 +7,22 @@ interface Path {
   pathName: string;
 }
 const paths: Path[] = [
-  { to: "/", pathName: "홈" },
+  { to: "", pathName: "홈" },
   { to: "products", pathName: "상품" },
   { to: "cart", pathName: "장바구니" },
 ];
 
 const Gnb = () => {
-  console.log("Gnb");
+  // console.log(useLocation());
+  const { pathname } = useLocation();
   return (
     <Navbar>
       <div>Logo</div>
       <MenuUl>
         {paths.map((path) => (
-          <li key={path.to}>
+          <PathItem key={path.to} isActive={`/${path.to}` === pathname}>
             <Link to={path.to}>{path.pathName}</Link>
-          </li>
+          </PathItem>
         ))}
       </MenuUl>
     </Navbar>
@@ -40,14 +41,16 @@ const Navbar = styled.nav`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: rgb(26, 53, 91);
+  background-color: rgba(28, 39, 51, 255);
   padding: 0 2rem;
-  * {
+  /* * {
     color: #fff;
-    font-size: ${({ theme }) => theme.fonts.size.sm};
+    font-size: 1.3rem;
     font-weight: 300;
-  }
+  } */
+  /* font-size: ${({ theme }) => theme.fonts.size.sm}; */
 `;
+
 const MenuUl = styled.ul`
   width: 100%;
   display: flex;
@@ -56,5 +59,14 @@ const MenuUl = styled.ul`
   gap: 1rem;
   :hover {
     color: #fff;
+  }
+`;
+
+const PathItem = styled.li<{ isActive: boolean }>`
+  a {
+    color: rgb(156 163 175);
+    font-size: 1.2rem;
+    font-weight: 300;
+    color: ${({ isActive }) => (isActive ? "#fff" : "rgb(156 163 175)")};
   }
 `;

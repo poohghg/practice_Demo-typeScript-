@@ -1,8 +1,11 @@
+import { useCallback } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { Product } from "../graphql/gqlProduct";
 
-interface ProductItemProps extends Product {}
+interface ProductItemProps extends Product {
+  addCartListener: (e: React.MouseEvent<HTMLButtonElement>, id: string) => void;
+}
 
 const ProductItem = ({
   id,
@@ -14,6 +17,7 @@ const ProductItem = ({
   category = "category",
   rate = 1,
   hit = 1,
+  addCartListener,
 }: ProductItemProps) => {
   return (
     <Item>
@@ -24,8 +28,11 @@ const ProductItem = ({
         </ImgWrap>
         <Title>{title}</Title>
         <Price>${price}</Price>
-        <span>rate: {rate}</span>
-        <span>count: {hit}</span>
+        <span>별점: {rate}</span>
+        <span>조회수: {hit}</span>
+        <div>
+          <button onClick={(e) => addCartListener(e, id)}>장바구니</button>
+        </div>
       </Link>
     </Item>
   );
@@ -37,6 +44,7 @@ const Category = styled.h4`
   font-size: 1.15rem;
   font-weight: 500;
   padding-bottom: 0.25rem;
+  /* background-color: ; */
 `;
 const Title = styled.p`
   padding-top: 0.3rem;
@@ -62,6 +70,7 @@ const Price = styled.h4`
   padding-bottom: 0.15rem;
   font-size: 1.1rem;
   font-weight: 500;
+  color: ${({ theme }) => theme.colors.mainColor};
 `;
 
 export default ProductItem;

@@ -14,7 +14,7 @@ interface NewTodoProps {
 const NewTodo = ({ setTodos }: NewTodoProps) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
 
-  const todoSubmitHandler = useCallback((e: React.FormEvent) => {
+  const todoSubmitHandler = useCallback((e: React.) => {
     e.preventDefault();
     const text = inputRef.current!.value;
     const isValid = validationInput({ value: text, required: true });
