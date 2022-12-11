@@ -8,7 +8,6 @@ import { Theme } from "./style/them";
 
 import "./style/fonts.css";
 import GlobalStyle from "./style/globalStyle";
-import Gnb from "./components/gnb";
 import { useMemo } from "react";
 
 const App = () => {
@@ -17,7 +16,6 @@ const App = () => {
     <ThemeProvider theme={Theme}>
       <GlobalStyle />
       <QueryClientProvider client={getClient}>
-        <Gnb />
         {element}
         <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
