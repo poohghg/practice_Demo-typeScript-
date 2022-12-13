@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { memo, useCallback } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { Product } from "../graphql/gqlProduct";
@@ -37,6 +37,7 @@ const ProductItem = ({
     </Item>
   );
 };
+export default memo(ProductItem);
 
 const Item = styled.li``;
 const Category = styled.h4`
@@ -72,5 +73,3 @@ const Price = styled.h4`
   font-weight: 500;
   color: ${({ theme }) => theme.colors.mainColor};
 `;
-
-export default ProductItem;

@@ -12,10 +12,12 @@ import { useMemo } from "react";
 
 const App = () => {
   const element = useRoutes(routes);
+  const queryClient = getClient();
+
   return (
     <ThemeProvider theme={Theme}>
       <GlobalStyle />
-      <QueryClientProvider client={getClient()}>
+      <QueryClientProvider client={queryClient}>
         {element}
         <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>

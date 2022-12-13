@@ -1,3 +1,5 @@
+import { graphqlFetcher } from "./../queryClient";
+import { useMutation } from "react-query";
 import { gql } from "graphql-tag";
 import { Product } from "./gqlProduct";
 
@@ -6,6 +8,8 @@ export type CartType = {
   amount: number;
   product: Product;
 };
+
+export type Carts = { cart: CartType[] };
 
 export const GET_CART = gql`
   query GET_CART {
@@ -65,3 +69,8 @@ export const DELETE_CART = gql`
     }
   }
 `;
+
+export const updateMutation = () =>
+  useMutation(({ id, amount }: { id: string; amount: number }) =>
+    graphqlFetcher(UPDATE_CART, { id, amount }),
+  );

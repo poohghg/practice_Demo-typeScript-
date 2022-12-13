@@ -1,14 +1,15 @@
 // 'https://fakestoreapi.com/products'
 import { QueryKeys, graphqlFetcher, getClient } from "../../queryClient";
-import { useMutation, useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import styled from "styled-components";
 import ProductItem from "../../components/productItem";
 import GET_PRODUCTS, { ADD_PRODUCT, Products } from "../../graphql/gqlProduct";
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import { ADD_CART } from "../../graphql/gqlCart";
 
 const ProductList = () => {
-  const queryClient = getClient();
+  // const  getClient();
+  const queryClient = useQueryClient();
   const { data, status } = useQuery<Products>(QueryKeys.PRODUCTS, () =>
     graphqlFetcher(GET_PRODUCTS),
   );
@@ -16,7 +17,7 @@ const ProductList = () => {
   const { mutate: addCart, status: mutateStatus } = useMutation(
     (id: string) => graphqlFetcher(ADD_CART, { id }),
     {
-      onSuccess: () => {
+      onSuccess(data, variables, context) {
         queryClient.invalidateQueries(QueryKeys.CART);
       },
     },
@@ -30,7 +31,7 @@ const ProductList = () => {
     [status],
   );
 
-  console.log("Data", data);
+  console.log("status", status, "mutateStatus", mutateStatus);
   return (
     <>
       <Title>상품목록입니다.</Title>
@@ -38,9 +39,9 @@ const ProductList = () => {
         <List>
           {data?.products.map((product) => (
             <ProductItem
+              key={product.id}
               {...product}
               addCartListener={addCartListener}
-              key={product.id}
             />
           ))}
         </List>
