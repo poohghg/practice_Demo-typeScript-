@@ -1,7 +1,9 @@
-import { graphqlFetcher } from "./../queryClient";
+import { getClient, graphqlFetcher, QueryKeys } from "./../queryClient";
 import { useMutation } from "react-query";
 import { gql } from "graphql-tag";
 import { Product } from "./gqlProduct";
+
+const client = getClient();
 
 export type CartType = {
   id: string;
@@ -71,6 +73,33 @@ export const DELETE_CART = gql`
 `;
 
 export const updateMutation = () =>
-  useMutation(({ id, amount }: { id: string; amount: number }) =>
-    graphqlFetcher(UPDATE_CART, { id, amount }),
+  useMutation(
+    ({ id, amount }: { id: string; amount: number }) =>
+      graphqlFetcher(UPDATE_CART, { id, amount }),
+    {
+      onMutate: ({ id, amount }) => {
+        client.cancelQueries(QueryKeys.CART);
+        const { cart: prev } = client.getQueryData<Carts>(QueryKeys.CART) || {
+          cart: [],
+        };
+
+        if (!prev.length) return null;
+        const newCart = prev.reduce((acc: CartType[], cur) => {
+          if (cur.id === id) cur.amount = amount;
+          return [...acc, cur];
+        }, []);
+        console.log(newCart);
+        client.setQueryData(QueryKeys.CART, { cart: newCart });
+        return { prev };
+      },
+
+      onError: (error, variables, context) => {
+        console.log(context);
+        client.setQueryData(QueryKeys.CART, context!.prev);
+      },
+
+      onSettled: () => {
+        client.invalidateQueries(QueryKeys.CART);
+      },
+    },
   );

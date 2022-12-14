@@ -8,18 +8,21 @@ import CartItem from "./cartItem";
 
 const CartList = ({ cart }: Carts) => {
   const { mutate: updateCart } = updateMutation();
-
   const handleUpdateAmount = (
+    e: React.MouseEvent,
+    amount: number,
     id: string,
-    e: React.ChangeEvent<HTMLInputElement>,
   ) => {
-    const amount = Number(e.target.value);
-    updateCart({ id, amount });
+    if (amount) updateCart({ id, amount });
   };
   return (
     <ul>
       {cart?.map((item) => (
-        <CartItem key={item.id} {...item} />
+        <CartItem
+          key={item.id}
+          handleUpdateAmount={handleUpdateAmount}
+          {...item}
+        />
       ))}
     </ul>
   );
