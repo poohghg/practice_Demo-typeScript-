@@ -1,3 +1,4 @@
+import { log } from "console";
 import {
   addDoc,
   collection,
@@ -27,7 +28,7 @@ const cartResolver: Resolver = {
           ...d,
         });
       });
-      console.log("cart", data);
+      // console.log("cart", data);
       return data;
     },
   },
@@ -59,6 +60,7 @@ const cartResolver: Resolver = {
         id: cartSnapshot.id,
       };
     },
+
     updateCart: async (parent, { cartId, amount }) => {
       if (amount < 1) throw Error("1 이하로 바꿀 수 없습니다.");
       const cartRef = doc(db, "cart", cartId);
@@ -74,8 +76,9 @@ const cartResolver: Resolver = {
     },
 
     deleteCart: async (parent, { cartId }) => {
+      console.log("   cartId", cartId);
       const cartRef = doc(db, "cart", cartId);
-      if (!cartRef) throw Error("장바구니 정보가 없다");
+      // if (!cartRef) throw Error("장바구니 정보가 없다");
       await deleteDoc(cartRef);
       return cartId;
     },

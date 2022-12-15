@@ -66,9 +66,7 @@ export const UPDATE_CART = gql`
 
 export const DELETE_CART = gql`
   mutation DELETE_CART($id: ID!) {
-    deleteCart(cartId: $id) {
-      id
-    }
+    deleteCart(cartId: $id)
   }
 `;
 
@@ -88,18 +86,28 @@ export const updateMutation = () =>
           if (cur.id === id) cur.amount = amount;
           return [...acc, cur];
         }, []);
-        console.log(newCart);
         client.setQueryData(QueryKeys.CART, { cart: newCart });
         return { prev };
-      },
-
-      onError: (error, variables, context) => {
-        console.log(context);
-        client.setQueryData(QueryKeys.CART, context!.prev);
       },
 
       onSettled: () => {
         client.invalidateQueries(QueryKeys.CART);
       },
+
+      onError: (error, variables, context) => {
+        client.setQueryData(QueryKeys.CART, context!.prev);
+      },
     },
   );
+
+export const deleteMutation = () =>
+  useMutation(({ id }: { id: string }) => graphqlFetcher(DELETE_CART, { id }), {
+    onMutate: () => {},
+    onSuccess: (data) => {
+      console.log("data", data);
+      client.invalidateQueries(QueryKeys.CART);
+    },
+    onError: (error) => {
+      if (error) console.log(error);
+    },
+  });
