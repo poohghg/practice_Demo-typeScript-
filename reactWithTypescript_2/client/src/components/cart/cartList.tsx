@@ -1,6 +1,13 @@
-import React, { createRef, SyntheticEvent, useMemo, useRef } from "react";
+import React, {
+  createRef,
+  SyntheticEvent,
+  useEffect,
+  useMemo,
+  useRef,
+} from "react";
 import styled from "styled-components";
 import { Carts, deleteMutation, updateMutation } from "../../graphql/gqlCart";
+import { CheckBoxInput, CheckBoxLabel } from "../../style/styledComponents";
 import CartItem from "./cartItem";
 
 // interface CartProps extends CartType {}
@@ -48,89 +55,39 @@ const CartList = ({ cart }: Carts) => {
     if (isDelete) deleteCart({ id });
   };
 
+  useEffect(() => {
+    if (checkboxRefs.length && formRef.current) {
+      checkboxRefs.forEach((ref) => (ref.current!.checked = true));
+      formRef.current.querySelector<HTMLInputElement>("#allCheckBox")!.checked =
+        true;
+    }
+  }, [formRef.current]);
+
   return (
     <form ref={formRef} onChange={handleCheckBoxChange}>
       <ul>
-        <Input id="allCheckBox" name="all" type="checkbox" />
-        <Label htmlFor="allCheckBox" />
-        {cart?.map((item, idx) => (
-          <CartItem
-            key={item.id}
-            ref={checkboxRefs[idx]}
-            handleUpdateAmount={handleUpdateAmount}
-            handleDeleteCart={handleDeleteCart}
-            {...item}
-          />
-        ))}
+        {cart.length !== 0 && (
+          <>
+            <CheckBoxInput id="allCheckBox" name="all" type="checkbox" />
+            <CheckBoxLabel htmlFor="allCheckBox" />
+            {cart?.map((item, idx) => (
+              <CartItem
+                key={item.id}
+                ref={checkboxRefs[idx]}
+                handleUpdateAmount={handleUpdateAmount}
+                handleDeleteCart={handleDeleteCart}
+                {...item}
+              />
+            ))}
+          </>
+        )}
       </ul>
     </form>
   );
 };
 
 const List = styled.ul`
-  /* display: flex; */
   margin: 0 auto;
-  /* width: 100%; */
-`;
-
-const Input = styled.input`
-  overflow: hidden;
-  position: absolute;
-  top: 2px;
-  left: 2px;
-  z-index: -1;
-  width: 1px;
-  height: 1px;
-  border: 0px;
-  background: transparent;
-  visibility: hidden;
-  appearance: none;
-
-  :checked + label::before {
-    border-color: rgb(55, 95, 255);
-    background: rgb(55, 95, 255);
-  }
-
-  :checked + label::after {
-    border-color: rgb(255, 255, 255);
-  }
-`;
-
-const Label = styled.label`
-  display: inline-block;
-  position: relative;
-  z-index: 1;
-  color: rgb(48, 48, 51);
-  cursor: pointer;
-  vertical-align: top;
-
-  ::before {
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    background: rgb(255, 255, 255);
-    border: 1px solid rgb(212, 212, 212);
-    border-radius: 2px;
-    text-align: center;
-    content: "";
-    width: 22px;
-    height: 22px;
-    transition: all 0.25s ease 0s;
-  }
-  ::after {
-    content: "";
-    position: absolute;
-    border-style: solid;
-    border-color: rgb(212, 212, 212);
-    border-image: initial;
-    border-width: 0px 1px 1px 0px;
-    transform: rotate(45deg);
-    top: 4px;
-    left: 8px;
-    width: 5px;
-    height: 10px;
-    box-sizing: content-box;
-  }
 `;
 
 export default CartList;

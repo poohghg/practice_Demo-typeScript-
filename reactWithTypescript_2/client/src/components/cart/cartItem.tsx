@@ -1,8 +1,9 @@
 import { ForwardedRef, forwardRef, memo } from "react";
 import styled from "styled-components";
-import { MinusIcon, PlusIcon } from "../../assets/icons/icons";
+import { MinusIcon, PlusIcon } from "../../style/icons/icons";
 import { CartType } from "../../graphql/gqlCart";
 import CartProduct from "./cartProduct";
+import { CheckBoxInput, CheckBoxLabel } from "../../style/styledComponents";
 
 interface CartProps extends CartType {
   handleUpdateAmount: (e: React.MouseEvent, amount: number, id: string) => void;
@@ -17,13 +18,15 @@ const CartItem = (
 ) => {
   return (
     <li>
-      <input
+      <CheckBoxInput
+        id={id}
         type="checkbox"
         name="select-item"
         data-id={id}
         ref={ref}
         // disabled={!createdAt}
       />
+      <CheckBoxLabel htmlFor={id} />
       <CartProduct {...product} />
       <div>
         <span>총액:</span>
@@ -60,8 +63,9 @@ const ControlAmount = styled.div`
   border-radius: 8px;
 
   > div {
+    text-align: center;
     height: 100%;
-    padding: 0 0.5rem;
+    width: 36px;
     border-left: 1px solid #bcbcbc;
     border-right: 1px solid #bcbcbc;
     font-size: 1.2rem;

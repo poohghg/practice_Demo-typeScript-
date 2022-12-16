@@ -1,27 +1,33 @@
 import { useRoutes } from "react-router-dom";
-import { routes } from "./routes"; // or use Vite's alias to simplify import path for nested components
+import { routes } from "./routes";
 import { QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { getClient } from "./queryClient";
 import { ThemeProvider } from "styled-components";
 import { Theme } from "./style/them";
 
-import "./style/fonts.css";
 import GlobalStyle from "./style/globalStyle";
-import { useMemo } from "react";
+import { Provider } from "react-redux";
+import store, { persistor } from "./redux";
+import { PersistGate } from "redux-persist/integration/react";
+
+import "./style/fonts.css";
 
 const App = () => {
   const element = useRoutes(routes);
   const queryClient = getClient();
-
   return (
-    <ThemeProvider theme={Theme}>
-      <GlobalStyle />
-      <QueryClientProvider client={queryClient}>
-        {element}
-        <ReactQueryDevtools initialIsOpen={false} />
-      </QueryClientProvider>
-    </ThemeProvider>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <ThemeProvider theme={Theme}>
+          <GlobalStyle />
+          <QueryClientProvider client={queryClient}>
+            {element}
+            <ReactQueryDevtools initialIsOpen={false} />
+          </QueryClientProvider>
+        </ThemeProvider>
+      </PersistGate>
+    </Provider>
   );
 };
 

@@ -8,14 +8,6 @@ interface CssProps {
 
 type CssStyleProps = Omit<CssProps, "withStyle">;
 
-export const PlusIcon = ({ width, height, withStyle }: CssProps) => (
-  <PlusIconBase width={width} height={height} style={withStyle} />
-);
-
-export const MinusIcon = ({ width, height, withStyle }: CssProps) => (
-  <MinusIconBase width={width} height={height} style={withStyle} />
-);
-
 const BaseIcon = styled.i`
   display: inline-block;
   background-repeat: no-repeat;
@@ -24,7 +16,7 @@ const BaseIcon = styled.i`
   opacity: 1;
 `;
 
-const PlusIconBase = styled(BaseIcon)<CssStyleProps>`
+export const PlusIcon = styled(BaseIcon)<CssStyleProps>`
   background-image: url(/images/plus.svg);
   ${(props) => css`
     width: ${props.width ?? 12}px;
@@ -32,7 +24,7 @@ const PlusIconBase = styled(BaseIcon)<CssStyleProps>`
   `}
 `;
 
-const MinusIconBase = styled(BaseIcon)<CssStyleProps>`
+export const MinusIcon = styled(BaseIcon)<CssStyleProps>`
   background-image: url(/images/minus.svg);
   ${(props) => css`
     width: ${props.width ?? "12px"};
