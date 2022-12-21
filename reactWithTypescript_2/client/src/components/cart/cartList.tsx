@@ -19,16 +19,13 @@ import {
 import { RootState } from "../../redux";
 import { setPayItems } from "../../redux/stateReducer";
 import { CheckBoxInput, CheckBoxLabel } from "../../style/styledComponents";
-import WillPay from "../pay/WillPay";
+import WillPay from "../pay/willPay";
 import CartItem from "./cartItem";
 
 // interface CartProps extends CartType {}
 
 const CartList = ({ cart }: Carts) => {
   const dispatch = useDispatch();
-  const payItems = useSelector(
-    (state: RootState) => state.stateReducer.payItems,
-  );
   const formRef = useRef<HTMLFormElement>(null);
   const [formData, setFormData] = useState<FormData>();
   // 사용변수
@@ -36,7 +33,6 @@ const CartList = ({ cart }: Carts) => {
     () => cart.map(() => createRef<HTMLInputElement>()),
     [cart],
   );
-  const isLoad = useRef<boolean>(false);
   //  뮤테이션
   const { mutate: updateCart } = updateMutation();
   const { mutate: deleteCart } = deleteMutation();
@@ -79,30 +75,26 @@ const CartList = ({ cart }: Carts) => {
     dispatch(setPayItems(newPayItems));
   }, [checkboxRefs, formData]);
 
-  return (
+  return cart.length !== 0 ? (
     <>
       <form ref={formRef} onChange={handleCheckBoxChange}>
         <ul>
-          {cart.length !== 0 && (
-            <>
-              <CheckBoxInput id="allCheckBox" name="all" type="checkbox" />
-              <CheckBoxLabel htmlFor="allCheckBox" />
-              {cart?.map((item, idx) => (
-                <CartItem
-                  key={item.id}
-                  ref={checkboxRefs[idx]}
-                  handleUpdateAmount={handleUpdateAmount}
-                  handleDeleteCart={handleDeleteCart}
-                  {...item}
-                />
-              ))}
-            </>
-          )}
+          <CheckBoxInput id="allCheckBox" name="all" type="checkbox" />
+          <CheckBoxLabel htmlFor="allCheckBox" />
+          {cart?.map((item, idx) => (
+            <CartItem
+              key={item.id}
+              ref={checkboxRefs[idx]}
+              handleUpdateAmount={handleUpdateAmount}
+              handleDeleteCart={handleDeleteCart}
+              {...item}
+            />
+          ))}
         </ul>
       </form>
       <WillPay />
     </>
-  );
+  ) : null;
 };
 
 const List = styled.ul`

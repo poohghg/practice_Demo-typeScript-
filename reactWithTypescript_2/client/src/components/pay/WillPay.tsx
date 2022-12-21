@@ -1,5 +1,6 @@
-import { memo, useEffect } from "react";
+import { memo, SyntheticEvent, useEffect } from "react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { RootState } from "../../redux";
 
@@ -9,11 +10,12 @@ interface ToTalInfoType {
 }
 
 const WillPay = () => {
+  const navigate = useNavigate();
   const payItems = useSelector(
     (state: RootState) => state.stateReducer.payItems,
   );
 
-  const TotalInfo = payItems.reduce<ToTalInfoType>(
+  const PayInfo = payItems.reduce<ToTalInfoType>(
     (acc, cur) => {
       acc.totalPrice += cur.amount * cur.product.price;
       acc.numOfItem++;
@@ -24,6 +26,12 @@ const WillPay = () => {
       numOfItem: 0,
     },
   );
+
+  const handlePay = (e: SyntheticEvent) => {
+    e.preventDefault();
+    if (payItems.length) navigate("/payment");
+    else alert("선택된 상품이 없습니다.");
+  };
 
   return (
     <Main>
@@ -36,9 +44,10 @@ const WillPay = () => {
       </ImgList> */}
       <div>
         <span>총 결제금액</span>
-        <span>{TotalInfo.totalPrice}원</span>
-        <span>{TotalInfo.numOfItem}개</span>
+        <span>{PayInfo.totalPrice}원</span>
+        <span>{PayInfo.numOfItem}개</span>
       </div>
+      <button onClick={handlePay}>결제하기</button>
     </Main>
   );
 };
