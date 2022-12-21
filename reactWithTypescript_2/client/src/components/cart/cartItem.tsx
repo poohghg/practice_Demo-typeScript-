@@ -1,4 +1,4 @@
-import { ForwardedRef, forwardRef, memo } from "react";
+import { ForwardedRef, forwardRef, memo, useEffect } from "react";
 import styled from "styled-components";
 import { MinusIcon, PlusIcon } from "../../style/icons/icons";
 import { CartType } from "../../graphql/gqlCart";
@@ -24,7 +24,7 @@ const CartItem = (
         name="select-item"
         data-id={id}
         ref={ref}
-        // disabled={!createdAt}
+        defaultChecked={true}
       />
       <CheckBoxLabel htmlFor={id} />
       <CartProduct {...product} />

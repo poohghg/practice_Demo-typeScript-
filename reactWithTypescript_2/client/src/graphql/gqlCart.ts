@@ -80,13 +80,20 @@ export const updateMutation = () =>
         const { cart: prev } = client.getQueryData<Carts>(QueryKeys.CART) || {
           cart: [],
         };
-
         if (!prev.length) return null;
-        const newCart = prev.reduce((acc: CartType[], cur) => {
-          if (cur.id === id) cur.amount = amount;
-          return [...acc, cur];
-        }, []);
-        client.setQueryData(QueryKeys.CART, { cart: newCart });
+
+        const newItmes = prev.slice();
+        prev.forEach((item, idx) => {
+          if (item.id === id) {
+            newItmes.splice(idx, 1, {
+              ...prev[idx],
+              amount: amount,
+            });
+            return false;
+          }
+        });
+
+        client.setQueryData(QueryKeys.CART, { cart: newItmes });
         return { prev };
       },
 
@@ -104,7 +111,6 @@ export const deleteMutation = () =>
   useMutation(({ id }: { id: string }) => graphqlFetcher(DELETE_CART, { id }), {
     onMutate: () => {},
     onSuccess: (data) => {
-      console.log("data", data);
       client.invalidateQueries(QueryKeys.CART);
     },
     onError: (error) => {

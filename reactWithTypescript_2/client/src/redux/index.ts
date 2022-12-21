@@ -6,7 +6,6 @@ import persistStore from "redux-persist/es/persistStore";
 import storage from "redux-persist/lib/storage";
 import stateReducer from "./stateReducer";
 
-// export const useAppDispatch: () => AppDispatch = useDispatch;
 // config 작성
 const persistConfig = {
   key: "root", // localStorage key
