@@ -34,12 +34,14 @@ const colors = {
   LightBlack: "#464646",
   red: "#ff4d4d",
   yellow: "#ffff4d",
-  blue: "#1478FF",
-  skyBlue: " #1ea4ff",
+  blue: "#103778",
+  skyBlue: "#1ea4ff",
+  deepBlue: "#273273",
   lightGray: "#BCBCBC",
   gray: "#999999",
   mainBackGroud: "#F0F3F6",
   puple: "rgb(103, 40, 255);",
+  blackGray: "rgba(28,39,51,255)",
 };
 
 const size = {
@@ -58,7 +60,6 @@ const device = {
 const mediaSize = {
   mobile: "800px",
   tablet: "900px",
-  // laptop: "1199px",
   desktop: "1200px",
 };
 

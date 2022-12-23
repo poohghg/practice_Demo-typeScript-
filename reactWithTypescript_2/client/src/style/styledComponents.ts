@@ -41,7 +41,7 @@ export const CheckBoxLabel = styled.label`
     content: "";
     width: 22px;
     height: 22px;
-    /* transition: all 0.25s ease 0s; */
+    transition: all 0.25s ease 0s;
   }
   ::after {
     content: "";

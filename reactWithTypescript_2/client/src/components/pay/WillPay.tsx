@@ -1,4 +1,4 @@
-import { memo, SyntheticEvent, useEffect } from "react";
+import { memo, useCallback } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
@@ -27,11 +27,10 @@ const WillPay = () => {
     },
   );
 
-  const handlePay = (e: SyntheticEvent) => {
-    e.preventDefault();
+  const handlePay = useCallback(() => {
     if (payItems.length) navigate("/payment");
     else alert("선택된 상품이 없습니다.");
-  };
+  }, []);
 
   return (
     <Main>
