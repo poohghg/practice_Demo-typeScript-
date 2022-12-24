@@ -1,32 +1,39 @@
-import { useState } from "react";
+import { memo, SyntheticEvent } from "react";
 import styled from "styled-components";
 
-const reg_email =
-  /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
+interface BaseUserInfoProps {
+  name: string;
+  isTest: boolean;
+  order: number;
+  handelSetState: (e: SyntheticEvent) => void;
+  handleSetOrder: () => void;
+}
 
-const Login = () => {
-  const registerUser = useState();
-
+const BaseUserInfo = ({
+  name,
+  isTest,
+  order,
+  handelSetState,
+  handleSetOrder,
+}: BaseUserInfoProps) => {
+  console.log("base");
   return (
-    <Main>
-      <h3>회원가입</h3>
-      <Box>
-        <h4>로그인에 사용할 아이디를 입력해주세요.</h4>
-        <Input type="text" maxLength={100} />
-        <Button>다음</Button>
-      </Box>
-    </Main>
+    <Box>
+      <h4>로그인에 사용할 아이디를 입력해주세요.</h4>
+      <Input
+        name={name}
+        type="text"
+        maxLength={100}
+        onChange={handelSetState}
+      />
+      <Button disabled={!isTest} onClick={handleSetOrder}>
+        다음
+      </Button>
+    </Box>
   );
 };
-export default Login;
 
-const Main = styled.section`
-  max-width: 720px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 0 auto;
-`;
+export default memo(BaseUserInfo);
 
 const Box = styled.div`
   width: 100%;
@@ -62,8 +69,12 @@ const Button = styled.button`
   font-weight: 450;
   width: 100px;
   padding: 0.5rem;
-  border: 1px solid ${({ theme }) => theme.colors.lightGray};
   border-radius: 50px;
   cursor: pointer;
   align-self: flex-end;
+  border: 1px solid ${({ theme }) => theme.colors.deepBlue};
+  color: ${({ theme }) => theme.colors.deepBlue};
+  :disabled {
+    border: 1px solid ${({ theme }) => theme.colors.lightGray};
+  }
 `;
