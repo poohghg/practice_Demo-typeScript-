@@ -1,12 +1,13 @@
-import { memo, SyntheticEvent, useEffect, useRef } from "react";
+import { memo, SyntheticEvent, useCallback, useEffect, useRef } from "react";
 import styled, { css } from "styled-components";
 
 interface BaseUserInfoProps {
   type: string;
   name: string;
+  value: number | string;
   placeHolder: string;
   isTest: boolean;
-  order: number;
+  subValue?: number | string;
   warning?: string;
   subWarning?: string;
   subName?: string;
@@ -18,7 +19,6 @@ interface BaseUserInfoProps {
 
 const BaseUserInfo = ({
   isTest,
-  order,
   type,
   name,
   placeHolder,
@@ -27,41 +27,45 @@ const BaseUserInfo = ({
   subName,
   isSubTest,
   maxLen,
+  value,
+  subValue,
   handelSetState,
   handleSetOrder,
 }: BaseUserInfoProps) => {
-  const input = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    if (input.current) {
-      input.current.value = "";
-      console.log("?ts");
-    }
-  }, []);
+  const handelOnEnter = useCallback(
+    (e: React.KeyboardEvent<HTMLInputElement>) => {
+      const isdisabled = isSubTest !== undefined ? !isSubTest : !isTest;
+      if (!isdisabled && e!.keyCode === 13) handleSetOrder();
+    },
+    [isTest, isSubTest],
+  );
 
   return (
     <Box>
       <h4>{placeHolder}</h4>
       <Input
-        ref={input}
         name={name}
         type={type}
         isTest={isTest}
         maxLength={maxLen ?? 100}
-        onChange={handelSetState}
         placeholder={placeHolder}
-        defaultValue=""
+        value={value}
+        autoComplete="off"
+        onKeyDown={handelOnEnter}
+        onChange={handelSetState}
       />
       <InfoText isTest={isTest}>{warning}</InfoText>
       {subName && isSubTest !== undefined ? (
         <>
           <Input
             name={subName}
+            value={subValue}
             type={type}
             isTest={isSubTest}
             maxLength={100}
+            autoComplete="off"
             onChange={handelSetState}
-            defaultValue=""
+            onKeyDown={handelOnEnter}
           />
           {subWarning && <InfoText isTest={isSubTest}>{subWarning}</InfoText>}
         </>
@@ -77,7 +81,7 @@ const BaseUserInfo = ({
   );
 };
 
-export default memo(BaseUserInfo);
+export default BaseUserInfo;
 
 const Box = styled.div`
   width: 100%;

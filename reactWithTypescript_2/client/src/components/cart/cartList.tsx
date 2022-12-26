@@ -79,7 +79,12 @@ const CartList = ({ cart }: Carts) => {
     <>
       <form ref={formRef} onChange={handleCheckBoxChange}>
         <ul>
-          <CheckBoxInput id="allCheckBox" name="all" type="checkbox" />
+          <CheckBoxInput
+            id="allCheckBox"
+            name="all"
+            type="checkbox"
+            defaultChecked={true}
+          />
           <CheckBoxLabel htmlFor="allCheckBox" />
           {cart?.map((item, idx) => (
             <CartItem
