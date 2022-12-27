@@ -29,7 +29,7 @@ export const generateRefreshToken = () => {
 
 export const setRefreshTokenInCookie = (res: Response) => {
   const token = generateRefreshToken();
-  res.cookie("access_token", token, {
+  res.cookie("accessToken", token, {
     httpOnly: true,
     maxAge: EXPIRE_REFRESH_TOKEN,
   });

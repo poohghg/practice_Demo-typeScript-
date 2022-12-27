@@ -3,8 +3,6 @@ import { useMutation } from "react-query";
 import { gql } from "graphql-tag";
 import { Product } from "./gqlProduct";
 
-const client = getClient();
-
 export type CartType = {
   id: string;
   amount: number;
@@ -70,6 +68,8 @@ export const DELETE_CART = gql`
   }
 `;
 
+// API
+const client = getClient();
 export const updateMutation = () =>
   useMutation(
     ({ id, amount }: { id: string; amount: number }) =>

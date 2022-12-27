@@ -27,7 +27,7 @@ const userResolver: Resolver = {
     login: async (parent, { email, passWord }, context) => {
       const q = query(collection(db, "user"), where("email", "==", email));
       const snapshot = await getDocs(q);
-      if (!snapshot) new Error("email");
+      if (!snapshot.size) throw new Error("email");
 
       let token;
       let nickName;
@@ -47,25 +47,42 @@ const userResolver: Resolver = {
           setRefreshTokenInCookie(context.res);
         }
       }
-      if (!token) new Error("passWord");
+      if (!token) throw new Error("passWord");
+      console.log(context.req.cookies);
       return { token, nickName, email };
+    },
+
+    checkEmail: async (parent, { email }, context) => {
+      const q = query(collection(db, "user"), where("email", "==", email));
+      const snapshot = await getDocs(q);
+      if (!snapshot.size) return true;
+      return false;
     },
   },
 
   Mutation: {
-    addUser: async (parent, { email, passWord, nickName }) => {
-      const newUser = {
-        email,
-        passWord: await hash(passWord, 5),
-        nickName,
-        createdAt: serverTimestamp(),
-      };
-      const result = await addDoc(collection(db, "user", email), newUser);
-      const token = generateAccessToken({
-        id: result.id,
-        nickName,
-      });
-      return { token, nickName, email };
+    addUser: async (parent, { email, passWord, nickName }, context) => {
+      try {
+        const newUser = {
+          email,
+          passWord: await hash(passWord, 5),
+          nickName,
+          userTy: 1,
+          createdAt: serverTimestamp(),
+        };
+        const result = await addDoc(collection(db, "user"), newUser);
+
+        // make token
+        setRefreshTokenInCookie(context.res);
+        const token = generateAccessToken({
+          id: result.id,
+          nickName,
+        });
+        return { token, nickName, email };
+      } catch (error) {
+        console.log(error);
+        throw new Error("ee");
+      }
     },
   },
 };

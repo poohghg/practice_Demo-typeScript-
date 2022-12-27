@@ -7,7 +7,7 @@ const Layout: React.FC = () => {
   return (
     <>
       <Gnb />
-      <MainLayout>
+      <MainLayout id="main">
         <Suspense fallback={"loading..."}>
           <Outlet />
         </Suspense>
@@ -18,6 +18,8 @@ const Layout: React.FC = () => {
 
 const MainLayout = styled.div`
   margin-top: 8vh;
+  height: 92vh;
+  overflow: auto;
 `;
 
 export default Layout;

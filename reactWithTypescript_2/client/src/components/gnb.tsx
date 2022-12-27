@@ -10,6 +10,8 @@ const paths: Path[] = [
   { to: "", pathName: "홈" },
   { to: "products", pathName: "상품" },
   { to: "cart", pathName: "장바구니" },
+  { to: "login", pathName: "로그인" },
+  { to: "singUp", pathName: "회원가입" },
 ];
 
 const Gnb = () => {

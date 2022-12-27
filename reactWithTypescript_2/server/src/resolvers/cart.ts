@@ -28,7 +28,6 @@ const cartResolver: Resolver = {
           ...d,
         });
       });
-      // console.log("cart", data);
       return data;
     },
   },

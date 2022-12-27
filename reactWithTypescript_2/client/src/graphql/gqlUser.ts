@@ -1,15 +1,21 @@
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { graphqlFetcher } from "./../queryClient";
+import { useMutation } from "react-query";
 import { gql } from "graphql-tag";
+import { setUserInfo } from "../redux/userReducer";
 
 export interface User {
-  id: string;
+  email: string;
   nickName: string;
+  token: string;
 }
 
 export type Users = User[];
 
 const GET_USER = gql`
-  query GET_PRODUCTS($cursor: ID, $showDeleted: Boolean) {
-    products(cursor: $cursor, showDeleted: $showDeleted) {
+  query GET_PRODUCTS($email: String!) {
+    checkEmail(email: $email) {
       id
       imageUrl
       price
@@ -23,19 +29,9 @@ const GET_USER = gql`
   }
 `;
 
-export const GET_PRODUCT = gql`
-  query GET_PRODUCT($id: ID!) {
-    product(id: $id) {
-      id
-      imageUrl
-      price
-      title
-      description
-      createdAt
-      category
-      rate
-      hit
-    }
+export const CHECK_EMAIL = gql`
+  query GET_PRODUCTS($email: String!) {
+    checkEmail(email: $email)
   }
 `;
 
@@ -44,6 +40,7 @@ export const ADD_USER = gql`
     addUser(email: $email, passWord: $passWord, nickName: $nickName) {
       email
       nickName
+      token
     }
   }
 `;
@@ -80,3 +77,37 @@ export const DELETE_PRODUCT = gql`
 `;
 
 export default GET_USER;
+
+// API
+
+export const singUpMutation = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  return useMutation<
+    {
+      addUser: User;
+    },
+    Error,
+    {
+      email: string;
+      passWord: string;
+      nickName: string;
+    }
+  >(
+    ({ email, passWord, nickName }) =>
+      graphqlFetcher(ADD_USER, { email, nickName, passWord }),
+    {
+      onMutate: () => {},
+      onSuccess: ({ addUser }) => {
+        console.log("   !!Data", addUser);
+        dispatch(setUserInfo({ ...addUser }));
+        navigate("/");
+      },
+      onError: (error) => {
+        if (error) console.log(error);
+        navigate("/");
+      },
+      onSettled: () => {},
+    },
+  );
+};

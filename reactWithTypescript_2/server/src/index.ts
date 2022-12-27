@@ -1,3 +1,4 @@
+import { verifyAccessToken } from "./jwt";
 import express from "express";
 import { ApolloServer } from "apollo-server-express";
 import schema from "./schema";
@@ -11,10 +12,10 @@ import resolvers from "./resolvers";
     typeDefs: schema,
     resolvers: resolvers,
     context: ({ req, res }) => {
-      if (!req.headers.authorization) return;
-      res.cookie;
-      // res.co1
-      // return { req, res };
+      const token = req.headers.authorization;
+      if (!token) return { req, res };
+      const user = verifyAccessToken(token);
+      return { req, res, user };
     },
   });
 

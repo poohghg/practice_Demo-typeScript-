@@ -8,10 +8,11 @@ import { Theme } from "./style/them";
 
 import GlobalStyle from "./style/globalStyle";
 import { Provider } from "react-redux";
-import store, { persistor } from "./redux";
+import store, { persistor, RootState } from "./redux";
 import { PersistGate } from "redux-persist/integration/react";
 
 import "./style/fonts.css";
+import { useSelector } from "react-redux";
 
 const App = () => {
   const element = useRoutes(routes);

@@ -5,6 +5,7 @@ import { persistReducer } from "redux-persist";
 import persistStore from "redux-persist/es/persistStore";
 import storage from "redux-persist/lib/storage";
 import stateReducer from "./stateReducer";
+import userReducer from "./userReducer";
 
 // config 작성
 const persistConfig = {
@@ -16,6 +17,7 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
   stateReducer,
+  userReducer,
 });
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 

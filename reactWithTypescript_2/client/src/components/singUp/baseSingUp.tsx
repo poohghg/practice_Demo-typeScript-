@@ -41,7 +41,7 @@ const BaseUserInfo = ({
   );
 
   return (
-    <Box>
+    <>
       <h4>{placeHolder}</h4>
       <Input
         name={name}
@@ -77,22 +77,11 @@ const BaseUserInfo = ({
       >
         다음
       </Button>
-    </Box>
+    </>
   );
 };
 
 export default BaseUserInfo;
-
-const Box = styled.div`
-  width: 100%;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  padding: 1rem;
-  > h4 {
-    font-size: 1.2rem;
-  }
-`;
 
 const InfoText = styled.p<{ isTest: boolean }>`
   color: ${({ theme }) => theme.colors.lightGray};
