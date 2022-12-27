@@ -10,6 +10,12 @@ import resolvers from "./resolvers";
   const server = new ApolloServer({
     typeDefs: schema,
     resolvers: resolvers,
+    context: ({ req, res }) => {
+      if (!req.headers.authorization) return;
+      res.cookie;
+      // res.co1
+      // return { req, res };
+    },
   });
 
   const app = express();

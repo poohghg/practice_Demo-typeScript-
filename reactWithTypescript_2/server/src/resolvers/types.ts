@@ -1,18 +1,27 @@
+import { Request, Response } from "express";
+
 export type Resolver = {
   [key: string]: {
     [key: string]: (
       parent: any,
       args: { [key: string]: any },
       context: {
-        db: {
-          cart: Cart;
-          products: Products;
-        };
+        req: Request;
+        res: Response;
+        user: User;
       },
       info: any,
     ) => any;
   };
 };
+
+export type User =
+  | {
+      nickName: string;
+      email: String;
+      token?: string;
+    }
+  | {};
 
 export type Product = {
   id: string;
@@ -29,4 +38,5 @@ export type CartItem = {
   id: string;
   amount: number;
 };
+
 export type Cart = CartItem[];
