@@ -40,6 +40,7 @@ export const graphqlFetcher = (query: RequestDocument, variables = {}) => {
     const userReducer = JSON.parse(root.userReducer);
     token = userReducer?.token;
   }
+
   return request(`${BASE_URL}/graphql`, query, variables, {
     "Content-Type": "application/json",
     "Access-Control-Allow-Origin": BASE_URL,

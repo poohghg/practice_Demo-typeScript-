@@ -24,6 +24,15 @@ import { Product, Resolver } from "./types";
 
 const userResolver: Resolver = {
   Query: {
+    checkEmail: async (parent, { email }, context) => {
+      const q = query(collection(db, "user"), where("email", "==", email));
+      const snapshot = await getDocs(q);
+      if (!snapshot.size) return true;
+      return false;
+    },
+  },
+
+  Mutation: {
     login: async (parent, { email, passWord }, context) => {
       const q = query(collection(db, "user"), where("email", "==", email));
       const snapshot = await getDocs(q);
@@ -52,15 +61,6 @@ const userResolver: Resolver = {
       return { token, nickName, email };
     },
 
-    checkEmail: async (parent, { email }, context) => {
-      const q = query(collection(db, "user"), where("email", "==", email));
-      const snapshot = await getDocs(q);
-      if (!snapshot.size) return true;
-      return false;
-    },
-  },
-
-  Mutation: {
     addUser: async (parent, { email, passWord, nickName }, context) => {
       try {
         const newUser = {

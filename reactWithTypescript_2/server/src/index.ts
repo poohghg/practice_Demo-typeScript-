@@ -5,20 +5,18 @@ import schema from "./schema";
 import resolvers from "./resolvers";
 
 (async () => {
-  // const clientUrl = env.CLIENT_URL as string;
   const port = 8000;
-
   const server = new ApolloServer({
     typeDefs: schema,
     resolvers: resolvers,
     context: ({ req, res }) => {
       const token = req.headers.authorization;
+      console.log("authorization", token);
       if (!token) return { req, res };
       const user = verifyAccessToken(token);
       return { req, res, user };
     },
   });
-
   const app = express();
   await server.start();
   server.applyMiddleware({

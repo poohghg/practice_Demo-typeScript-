@@ -10,6 +10,6 @@ const SingUpProcess = ({ email, nickName, passWord }: SingUpProcessProps) => {
     singUp({ email, nickName, passWord });
   }, []);
 
-  return <div>로그인 처리중입니다.</div>;
+  return <div>회원가입 처리중입니다.</div>;
 };
 export default SingUpProcess;

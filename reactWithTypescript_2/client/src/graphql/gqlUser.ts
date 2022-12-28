@@ -35,6 +35,16 @@ export const CHECK_EMAIL = gql`
   }
 `;
 
+export const LOGIN = gql`
+  mutation LOGIN($email: String!, $passWord: String!) {
+    login(email: $email, passWord: $passWord) {
+      email
+      nickName
+      token
+    }
+  }
+`;
+
 export const ADD_USER = gql`
   mutation ADD_USER($email: String!, $passWord: String!, $nickName: String!) {
     addUser(email: $email, passWord: $passWord, nickName: $nickName) {
@@ -79,7 +89,6 @@ export const DELETE_PRODUCT = gql`
 export default GET_USER;
 
 // API
-
 export const singUpMutation = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -99,15 +108,36 @@ export const singUpMutation = () => {
     {
       onMutate: () => {},
       onSuccess: ({ addUser }) => {
-        console.log("   !!Data", addUser);
         dispatch(setUserInfo({ ...addUser }));
-        navigate("/");
       },
       onError: (error) => {
         if (error) console.log(error);
-        navigate("/");
       },
-      onSettled: () => {},
+      onSettled: () => navigate("/"),
     },
   );
+};
+
+export const loginMutation = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  return useMutation<
+    {
+      login: User;
+    },
+    Error,
+    {
+      email: string;
+      passWord: string;
+    }
+  >(({ email, passWord }) => graphqlFetcher(LOGIN, { email, passWord }), {
+    onMutate: () => {},
+    onSuccess: ({ login }) => {
+      dispatch(setUserInfo({ ...login }));
+    },
+    onError: (error) => {
+      // if (error) error.message = "error";
+    },
+    onSettled: () => {},
+  });
 };

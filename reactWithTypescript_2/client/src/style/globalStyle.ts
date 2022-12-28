@@ -27,7 +27,6 @@ const GlobalStyle = createGlobalStyle`
     border-style: none;
     border: none;
     background: none;
-    font-family: 'Noto Sans KR';
   }
 
   h1{}

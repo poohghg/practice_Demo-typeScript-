@@ -7,11 +7,11 @@ const userSchema = gql`
     nickName: String!
   }
   extend type Query {
-    login(email: String!, passWord: String!): User!
     checkEmail(email: String!): Boolean!
   }
   extend type Mutation {
     addUser(email: String!, passWord: String!, nickName: String!): User!
+    login(email: String!, passWord: String!): User!
   }
 `;
 
