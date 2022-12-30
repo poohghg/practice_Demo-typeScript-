@@ -43,7 +43,7 @@ export const graphqlFetcher = (query: RequestDocument, variables = {}) => {
 
   return request(`${BASE_URL}/graphql`, query, variables, {
     "Content-Type": "application/json",
-    "Access-Control-Allow-Origin": BASE_URL,
+    // "Access-Control-Allow-Origin": BASE_URL,
     authorization: token,
   });
 };

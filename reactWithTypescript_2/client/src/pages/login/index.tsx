@@ -1,4 +1,5 @@
 import { SyntheticEvent, useCallback, useRef, useState } from "react";
+import { useCookies } from "react-cookie";
 import styled from "styled-components";
 import { loginMutation } from "../../graphql/gqlUser";
 
@@ -7,11 +8,12 @@ const reg_email =
 const reg_passWord = /^.*(?=^.{8,}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
 
 const LoginPage = () => {
+  const [cookies, setCookie] = useCookies(["test"]); // 쿠키 훅
   const form = useRef<HTMLFormElement>(null);
   const { mutate: login, data, error } = loginMutation();
 
   // console.log("data", data);
-  console.log("error", error?.message);
+  // console.log("error", error?.message);
 
   const handelLogin = (e: SyntheticEvent) => {
     e.preventDefault();
@@ -21,9 +23,8 @@ const LoginPage = () => {
     if (!reg_email.test(email!.value)) return email!.focus();
     if (!reg_passWord.test(passWord!.value)) return passWord!.focus();
     login({ email: email!.value, passWord: passWord!.value });
-    console.log(email, passWord);
   };
-
+  console.log("cookies", cookies);
   return (
     <Main>
       <Title>안녕하세요</Title>

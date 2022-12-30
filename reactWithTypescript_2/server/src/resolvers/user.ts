@@ -7,8 +7,6 @@ import { hash, compare } from "bcrypt";
 import {
   addDoc,
   collection,
-  deleteDoc,
-  doc,
   DocumentData,
   getDoc,
   getDocs,
@@ -53,11 +51,17 @@ const userResolver: Resolver = {
         if (await compare(passWord, d.passWord)) {
           token = generateAccessToken({ id: d.id, nickName: d.nickName });
           nickName = d.nickName;
-          setRefreshTokenInCookie(context.res);
+          // setRefreshTokenInCookie(context.res);
         }
       }
       if (!token) throw new Error("passWord");
-      console.log(context.req.cookies);
+
+      context.res.cookie("test", "Dasdas", {
+        // expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
+        httpOnly: true,
+        sameSite: "none",
+        maxAge: 1000 * 60 * 3000000,
+      });
       return { token, nickName, email };
     },
 

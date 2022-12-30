@@ -1,7 +1,12 @@
-import React from "react";
+import axios from "axios";
+import { log } from "console";
+import React, { useEffect } from "react";
+import { useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
 // import { Interface } from "readline";
 import styled from "styled-components";
+import { LOGIN } from "../graphql/gqlUser";
+import { graphqlFetcher } from "../queryClient";
 
 interface PathInterface {
   path: string;
@@ -19,10 +24,29 @@ const PathInfo: PathInterface[] = [
 ];
 
 const Main = () => {
+  // const { mutate } = useMutation(
+  //   ({ email, passWord }: { email: string; passWord: string }) =>
+  //     graphqlFetcher(LOGIN, { email, passWord }),
+  // );
+
+  const setCook = () => {
+    graphqlFetcher(LOGIN, {
+      email: "poohghg@naver.com",
+      passWord: "qwer1234!@",
+    });
+  };
+
+  useEffect(() => {
+    setCook();
+  }, []);
+
   const navigate = useNavigate();
+  // const cc = new Cookie();
+  console.log("cc", document.cookie);
   return (
     <Base>
       <HeaderLabel>DemoCode</HeaderLabel>
+      <button onClick={setCook}>31231</button>
       <List>
         {PathInfo.map((info) => (
           <ContentWrap key={info.path} onClick={(e) => navigate(info.path)}>

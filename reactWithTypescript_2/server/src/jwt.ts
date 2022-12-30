@@ -31,6 +31,9 @@ export const setRefreshTokenInCookie = (res: Response) => {
   const token = generateRefreshToken();
   res.cookie("accessToken", token, {
     httpOnly: true,
-    maxAge: EXPIRE_REFRESH_TOKEN,
+    expires: new Date(Date.now() + 9000000000),
+    secure: true,
+    // maxAge: EXPIRE_REFRESH_TOKEN,
+    // sa,
   });
 };

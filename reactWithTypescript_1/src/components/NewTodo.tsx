@@ -4,6 +4,7 @@ import React, {
   useCallback,
   useRef,
   memo,
+  SyntheticEvent,
 } from "react";
 import { Todos } from "../models/todo.model";
 import { validationInput } from "../modules/functions";
@@ -14,7 +15,7 @@ interface NewTodoProps {
 const NewTodo = ({ setTodos }: NewTodoProps) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
 
-  const todoSubmitHandler = useCallback((e: React.) => {
+  const todoSubmitHandler = useCallback((e: SyntheticEvent) => {
     e.preventDefault();
     const text = inputRef.current!.value;
     const isValid = validationInput({ value: text, required: true });
